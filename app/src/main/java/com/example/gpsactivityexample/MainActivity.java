@@ -10,7 +10,9 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.location.LocationProvider;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -116,6 +118,30 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     public void onProviderEnabled(@NonNull String provider) {
         LocationListener.super.onProviderEnabled(provider);
         salida.append("Proveedor " + provider + " habilitado.");
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+
+        String tag = "MainActivity";
+
+        switch (status) {
+            case LocationProvider.OUT_OF_SERVICE:
+                Log.v(tag, "Status Changed: Out of Service");
+                Toast.makeText(this, "Status Changed: Out of Service",
+                        Toast.LENGTH_SHORT).show();
+                break;
+            case LocationProvider.TEMPORARILY_UNAVAILABLE:
+                Log.v(tag, "Status Changed: Temporarily Unavailable");
+                Toast.makeText(this, "Status Changed: Temporarily Unavailable",
+                        Toast.LENGTH_SHORT).show();
+                break;
+            case LocationProvider.AVAILABLE:
+                Log.v(tag, "Status Changed: Available");
+                Toast.makeText(this, "Status Changed: Available",
+                        Toast.LENGTH_SHORT).show();
+                break;
+        }
     }
 
     @Override
